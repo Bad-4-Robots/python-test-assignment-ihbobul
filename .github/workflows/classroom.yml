@@ -39,8 +39,9 @@ jobs:
     - name: Run Tests
       run: python -m tests.run_tests  # Ensure tests run correctly
 
-    - name: Report Results
-      if: always()
+    - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TEST_RESULTS: "${{steps.test.outputs.result}}"
       with:
-        runners: "python-test,pytest"
+        runners: test
