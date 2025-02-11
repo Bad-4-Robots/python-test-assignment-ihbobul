@@ -26,8 +26,8 @@ jobs:
     
     - name: Verify Student Submission
       run: |
-        if [ ! -f add_two.py ]; then
-          echo "❌ add_two.py is missing!"
+        if [ ! -f add_numbers.py ]; then
+          echo "❌ add_numbers.py is missing!"
           exit 1
         fi
 
