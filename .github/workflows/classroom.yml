@@ -1,7 +1,7 @@
 name: Autograding Tests
 'on':
-- push
-- repository_dispatch
+  - push
+  - repository_dispatch
 permissions:
   checks: write
   actions: read
@@ -19,7 +19,7 @@ jobs:
       with:
         repository: Bad-4-Robots/add-two-tests
         token: ${{ secrets.TEST_REPO_PAT }}
-        path: .github/classroom-tests
+        path: tests
     
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -27,7 +27,7 @@ jobs:
         python-version: '3.x'
         
     - name: Run Tests
-      run: python .github/classroom-tests/run_tests.py
+      run: python tests/run_tests.py
       
     - name: Report Results
       if: always()
