@@ -7,6 +7,6 @@ def add_two_numbers(a: float, b: float) -> float:
         b (float): The second number
         
     Returns:
-        float: The sum of a and b
+        float: The sum of a and b.
     """
     return float(a) + float(b)
