@@ -11,50 +11,31 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor != 'github-classroom[bot]'
     steps:
-    - name: Checkout student code
+    - name: Checkout code
       uses: actions/checkout@v4
-    
-    - name: Checkout private tests
+
+    - name: Fetch private tests
       uses: actions/checkout@v4
       with:
         repository: Bad-4-Robots/add-two-tests
         token: ${{ secrets.TEST_REPO_PAT }}
-        path: tests
-    
-    - name: List all files
-      run: ls -R
-    
-    - name: Verify Student Submission
+        path: temp_tests
+
+    - name: Move test file to root
       run: |
-        if [ ! -f add_numbers.py ]; then
-          echo "❌ add_numbers.py is missing!"
-          exit 1
-        fi
+        mv temp_tests/run_tests.py .
+        rm -rf temp_tests
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pytest
-
-    - name: Run Tests with pytest
+    - name: test
       id: test
-      run: |
-        echo '{"version": 1, "tests": []}' > results.json
-        if PYTHONPATH=. python -m pytest tests/run_tests.py -v; then
-          echo '{"version": 1, "tests": [{"name": "Implementation Tests", "status": "pass"}]}' > results.json
-        else
-          echo '{"version": 1, "tests": [{"name": "Implementation Tests", "status": "fail"}]}' > results.json
-        fi
-        echo "result=$(cat results.json)" >> $GITHUB_OUTPUT
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        setup-command: ''
 
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
-        TEST_RESULTS: "${{ steps.test.outputs.result }}"
+        TEST_RESULTS: "${{steps.test.outputs.result}}"
       with:
         runners: test
