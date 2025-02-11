@@ -21,14 +21,21 @@ jobs:
         token: ${{ secrets.TEST_REPO_PAT }}
         path: tests
     
+    - name: Verify Student Submission
+      run: |
+        if [ ! -f add_two.py ]; then
+          echo "❌ add_two.py is missing!"
+          exit 1
+        fi
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.x'
-        
+
     - name: Run Tests
-      run: python tests/run_tests.py
-      
+      run: python -m tests.run_tests  # Runs the test script from the correct path
+
     - name: Report Results
       if: always()
       uses: classroom-resources/autograding-grading-reporter@v1
