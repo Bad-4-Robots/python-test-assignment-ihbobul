@@ -21,6 +21,9 @@ jobs:
         token: ${{ secrets.TEST_REPO_PAT }}
         path: tests
     
+    - name: List all files
+      run: ls -R
+    
     - name: Verify Student Submission
       run: |
         if [ ! -f add_two.py ]; then
@@ -34,10 +37,10 @@ jobs:
         python-version: '3.x'
 
     - name: Run Tests
-      run: python -m tests.run_tests  # Runs the test script from the correct path
+      run: python -m tests.run_tests  # Ensure tests run correctly
 
     - name: Report Results
       if: always()
       uses: classroom-resources/autograding-grading-reporter@v1
       with:
-        runners: python-test
+        runners: "python-test"  # Ensure it is a properly formatted string
