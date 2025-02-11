@@ -44,7 +44,7 @@ jobs:
     - name: Run Tests with pytest
       id: test
       run: |
-        pytest --maxfail=1 --disable-warnings -q  # Run the tests with pytest
+        pytest tests --maxfail=1 --disable-warnings -q  # Run tests from the tests folder
 
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
