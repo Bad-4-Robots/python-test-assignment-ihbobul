@@ -39,12 +39,13 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pytest
+        pip install pytest pytest-json-report
 
     - name: Run Tests with pytest
       id: test
       run: |
-        PYTHONPATH=. pytest tests/run_tests.py -v --maxfail=1 --disable-warnings -q
+        PYTHONPATH=. pytest tests/run_tests.py --json-report --json-report-file=results.json || true
+        echo "result=$(cat results.json)" >> $GITHUB_OUTPUT
 
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
