@@ -43,4 +43,4 @@ jobs:
       if: always()
       uses: classroom-resources/autograding-grading-reporter@v1
       with:
-        runners: "python-test"  # Ensure it is a properly formatted string
+        runners: "python-test,pytest"
